@@ -54,7 +54,10 @@
     }
 
 
+    
     async function run(){
+
+
         const city = 'Phuket';
         const state = 'Phuket';
         const country = 'Thailand';
