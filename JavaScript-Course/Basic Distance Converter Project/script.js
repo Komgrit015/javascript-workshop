@@ -3,12 +3,12 @@
 
         event.preventDefault();
 
-        let distance = parseFloat(document.getElementById('distance').value);
-        let answer = document.getElementById('answer');
+        const distance = parseFloat(document.getElementById('distance').value);
+        const answer = document.getElementById('answer');
 
 
         if (distance) {
-            let conversion = (distance * 1.609344).toFixed(3);
+            const conversion = (distance * 1.609344).toFixed(3);
             // let roundedConversion = conversion.toFixed(3);
 
             answer.innerHTML = `<h2>${distance} miles converts to ${conversion} kilometers</h2>`;
