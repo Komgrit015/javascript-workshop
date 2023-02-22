@@ -5,10 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <!-- <style>
+        div{
+            width: 50px;
+            height: 2500px;
+            background-color: red;
+        }
+    </style> -->
 </head>
 <body>
 
-    <h1> Tutorial </h1>
+    <!-- <h1> Tutorial </h1> -->
 
 <!-- 
     <p class="blue">Here is some text</p>
@@ -38,6 +46,11 @@
         <input type="submit" value="send">
     </form> -->
 
+    <!-- <h1>Roll Your mouse over the boxes</h1>
+    <div></div> -->
+
+    <h1>Window Resizeing</h1>
+    <p>Resize the window</p>
     
     <script>
 
@@ -224,6 +237,38 @@
 
         //     alert(formData);
         // });
+
+        // let heading = document.querySelector('h1');
+        // let box = document.querySelector('div');
+
+        // box.addEventListener('mouseover', function(){
+        //     heading.innerHTML = "the mouse is over the box"
+        // });
+
+        // box.addEventListener('mouseout', function(){
+        //     heading.innerHTML = "the mouse has left the box"
+        // });
+
+        // heading.addEventListener('mouseover', function(){
+        //     heading.innerHTML = "Roll your ,ouse over the boxes"
+        // });
+
+        // let pagetop ;
+
+        // window.addEventListener('scroll', function(){
+        //     let pagetop = window.pageYOffset;
+        //     console.log(pagetop);
+        // });
+
+        // window.addEventListener('resize', function(){
+
+        //     console.log(`page width is ${window.innerWidth}`);
+        //     console.log(`page height is ${window.innerHeight}`);
+        // })
+
+        document.addEventListener('keydown', function(event){
+            alert(`${event.key} key was pressed`)
+        })
     </script>
 </body>
 </html> 
