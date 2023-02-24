@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet">
+	<link href="styles.css" rel="stylesheet">
+
+	
+</head>
+
+<body>
+
+	<div id="slider">
+		<ul>
+			<li><img src="image/image1.jpg" alt="slideshow image"></li>
+			<li><img src="image/image2.jpg" alt="slideshow image"></li>
+			<li><img src="image/image3.jpg" alt="slideshow image"></li>
+			<li><img src="image/image4.jpg" alt="slideshow image"></li>
+			<li><img src="image/image5.jpg" alt="slideshow image"></li>
+		</ul>
+	</div>
+
+	<p id="links"><a href="#" id="previous">previous</a><a href="#" id="next">next</a></p>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js" ></script>
+
+	<script>
+		$(window).on('load', function(){
+
+			'use strict';
+
+			const imageCount = $("#slider ul li").length;
+			const imageWidth = $("#slider ul li:first img").width();
+			const totalWidth = (imageCount * imageWidth) + "px";
+			// alert(totalWidth);
+
+			let leftPosition = 0;
+			let counter = 0 ;
+
+			$("#slider ul").css("width", totalWidth);
+
+			$('#next').click(function(){
+				counter++ ;
+
+				if(counter == imageCount){
+					counter = 0;
+				}
+				
+				leftPosition = `-${counter * imageWidth}px`;
+				$('#slider ul').animate({left: leftPosition}, 700, "easeInQuad");
+			})
+
+			$('#previous').click(function(){
+				counter-- ;
+
+				if(counter < 0){
+					counter = imageCount-1;
+					
+				}
+				leftPosition = `-${counter * imageWidth}px`;
+				$('#slider ul').animate({left: leftPosition}, 700, "easeInQuad");
+			})
+		});
+
+	</script>
+
+</body>
+</html>
