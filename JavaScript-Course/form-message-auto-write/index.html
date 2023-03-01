@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="frm_field_5_container" class="frm_form_field form-field  frm_required_field frm_top_container frm_full">
+        <label for="field_message" id="field_message_label" class="frm_primary_label">
+            <span class="frm_required" aria-hidden="true">*</span>
+        </label>
+        <textarea name="item_meta[5]" id="field_message" rows="8" placeholder="Li" data-reqmsg="Dieses Feld darf nicht leer sein." aria-required="true" data-invmsg=" ist ungültig" aria-invalid="false"></textarea>
+        
+        
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+    
+    <script>
+
+(function ($) {
+    $(document).ready(function () {
+        var editingMode = false;
+        var charIndex = 0;
+        var textIndex = 0;
+        var texts = [
+            'Lieber Ioannis Papachristos,',
+            'Sehr geehrter Herr Ioannis Papachristos,',
+            'Hallo Ioannis,'
+        ];
+        var writeSpeed = [170, 220];
+        var delSpeed = [60, 110];
+
+        console.log(editingMode)
+
+        $('#field_message').on('click', function () {
+            if (editingMode) {
+                return;
+            }
+            editingMode = true;
+            $('#field_message').val(texts[textIndex]);
+        });
+
+        $('#field_message').attr('placeholder', '');
+        typeWriter();
+
+        function randSpeed(min, max) {
+            return Math.floor(Math.random() * (max - min) ) + min;
+        }
+
+        function deleteChars() {
+            if (editingMode) {
+                return;
+            }
+
+            if ($('#field_message').attr('placeholder').length < 1) {
+                charIndex = 0;
+                if (textIndex < texts.length - 1) {
+                    textIndex++;
+                } else {
+                    textIndex = 0;
+                }
+
+                $('#field_message').attr('placeholder', '');
+                setTimeout(typeWriter, 800);
+                return;
+            }
+
+            $('#field_message').attr('placeholder', $('#field_message').attr('placeholder').slice(0, -1));
+
+            setTimeout(deleteChars, randSpeed(delSpeed[0], delSpeed[1]));
+        }
+
+        function typeWriter() {
+            if (editingMode) {
+                return;
+            }
+
+            if (charIndex < texts[textIndex].length) {
+                $('#field_message').attr('placeholder', $('#field_message').attr('placeholder') + texts[textIndex].charAt(charIndex));
+                charIndex++;
+                setTimeout(typeWriter, randSpeed(writeSpeed[0], writeSpeed[1]));
+            } else {
+                setTimeout(deleteChars, 1600);
+            }
+        }
+    });
+}) (jQuery);
+
+        // old
+        // function makeUpperCase(aString) {
+        //     return aString.toUpperCase();
+        // }
+
+        // console.log(makeUpperCase("here is a string"));
+
+        // Convert arrow functions
+        // const makeUpperCase = function(aString) {
+        //     return aString.toUpperCase();
+        // }
+
+        // console.log(makeUpperCase("here is a string"));
+
+        // const makeUpperCase = (aString) =>{
+        //     return aString.toUpperCase();
+        // }
+
+        // console.log(makeUpperCase("here is a string"));
+
+    </script>
+</body>
+</html>
