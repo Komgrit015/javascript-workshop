@@ -18,18 +18,71 @@
 
         // console.log(makeUpperCase("here is a string"));
 
+
+
         // Convert arrow functions
         // const makeUpperCase = function(aString) {
+        //     return aString.toUpperCase(); 
+        // }
+
+        // console.log(makeUpperCase("here is a string"));
+
+
+
+        // const makeUpperCase = aString =>{
         //     return aString.toUpperCase();
         // }
 
         // console.log(makeUpperCase("here is a string"));
 
-        const makeUpperCase = (aString) =>{
-            return aString.toUpperCase();
-        }
+
+
+        const makeUpperCase = aString => aString.toUpperCase();
 
         console.log(makeUpperCase("here is a string"));
+
+
+
+        // const fullname = (fname, lname) => `${fname} ${lname}`
+
+        // console.log(fullname('Bill', 'Mead'));
+
+        const fullname = () => {
+            const fname = "bill";
+            const lname = "mead";
+            return `${fname} ${lname}`
+        }
+
+        console.log(fullname());
+
+        
+
+        const fruit = ["banana", "orange", "apple", "kiwi"];
+        const upperFruit = [];
+
+        // fruit.forEach( function(thisFruit) {
+        //     upperFruit.push(thisFruit.toUpperCase());
+        // });
+
+        fruit.forEach( eachFruit => {
+            upperFruit.push(eachFruit.toUpperCase());
+        });
+        
+        console.log(upperFruit);
+
+        const Employee = function ( fname, lname, jobTitle ) {
+            this.fname = fname;
+            this.lname = lname;
+            this.positions =jobTitle;
+            this.fullName = () => `${fname} ${lname}`;
+            
+        }
+
+        const id1234 = new Employee('Bob', 'John', 'Smith');
+
+        console.log(id1234.fname);
+        console.log(id1234.fullName);
+
 
     </script>
 </body>
