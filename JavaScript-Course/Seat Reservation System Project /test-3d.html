@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        model-viewer{
+            width: 100%;
+            height: 700px;
+        }
+
+        .Hotspot{
+            background: rgb(255, 0, 0);
+            border-radius: 32px;
+            border: 0px;
+            box-shadow: rgb(0 0 0 / 25%) 0px 2px 4px;
+            box-sizing: border-box;
+            cursor: pointer;
+            height: 24px;
+            padding: 8px;
+            position: relative;
+            transition: opacity 0.3s ease 0s;
+            width: 24px;
+        }
+        .HotspotAnnotation{
+            z-index: 1;
+        }
+        .Hotspot:focus{
+            border: 4px solid rgb(0, 128, 200);
+            height: 32px;
+            outline: none;
+            width: 32px;
+        }
+        .model-description{
+            position: relative;
+            box-shadow: 1px 5px 10px 1px rgb(0 0 0 / 8%);
+            display: none;
+            padding: 3rem;
+            margin: 2rem;
+        }
+        .model-description.active{
+            display: block;
+        }
+
+        .c-pop-up__modal-close{
+            background-color: transparent;
+            position: absolute;
+            top: 0;
+            right: 0;
+            border: 0;
+            padding: 0.5rem !important;
+            height: 48px !important;
+            width: 48px;
+            margin: 0;
+            cursor: pointer;
+        }
+        .icon-close::before{
+            content: "\00D7";
+            font-size: 50px;
+            position: absolute;
+            top: 0;
+            left: 0;
+
+        }
+        .HotspotAnnotation{
+            width: 100px;
+            margin-left: 2rem;
+            display: none;
+            background: #fff;
+            color: #000;
+            box-shadow: rgb(0 0 0 / 25%) 0px 2px 4px;
+            padding: 10px 0;
+            position: absolute;
+        }
+        .HotspotAnnotation.active{
+            display: block;
+        }
+
+    </style>
+</head>
+
+
+<body>
+    <model-viewer id="hotspot-camera-view-demo" src="human_body.glb" ar ar-modes="webxr scene-viewer quick-look" camera-controls poster="poster.webp" shadow-intensity="1" shadow-softness="1" exposure="2">
+        <button class="Hotspot" slot="hotspot-1" data-position="0.23846354887580268m 3.554613785267205m -0.41442673593730955m" data-orbit="45deg"data-visibility-attribute="visible">
+            <div class="HotspotAnnotation">
+                <p>Head</p></div>
+        </button><button class="Hotspot" slot="hotspot-2" data-position="-0.7549720898653781m 3.391779215386788m -0.07191270773159078m" data-orbit="-90deg" data-visibility-attribute="visible">
+            <div class="HotspotAnnotation">uuuuuu></div>
+        </button><button class="Hotspot" slot="hotspot-3" data-position="-1.0549720898653781m 3.391779215386788m -0.07191270773159078m" data-orbit="-90deg" data-visibility-attribute="visible">
+            <div class="HotspotAnnotation">uuuuuuuu</div>
+        </button><button class="Hotspot" slot="hotspot-4" data-position="-1.5663818406397627m 2.8057642910375225m -0.1621862277595732m" data-orbit="180deg" data-visibility-attribute="visible">
+            <div class="HotspotAnnotation"><p>tesfffffff</p></div>
+        </button>
+        <div class="progress-bar hide" slot="progress-bar">
+            <div class="update-bar"></div>
+        </div>
+        <button slot="ar-button" id="ar-button">
+            View in your space
+        </button>
+        <div id="ar-prompt">
+            <img src="https://modelviewer.dev/shared-assets/icons/hand.png">
+        </div>
+    </model-viewer>
+    
+    
+    
+    
+    
+
+    <div class="model-description" id="modal-open">
+        <button type="button" id="modal-close" class="c-pop-up__modal-close c-button md" ><span class="o-icon icon-close"></span></button>
+        <div class="detail">
+            <h1 id="description-tattoo"></h1>
+            <h2>Description/Information</h2>
+        </div>
+        <div class="item-btn">
+            <button> <a href="#">Live Chat</a></button>
+            <button> <a href="#">Book online</a></button>
+        </div>
+
+    </div>
+
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"></script>
+
+
+    <script>
+
+const elementWithShadowRoot = document.querySelector("#hotspot-camera-view-demo");
+let shadowRoot = elementWithShadowRoot.shadowRoot;
+
+if (shadowRoot == null) {
+  const observer = new MutationObserver((mutationsList) => {
+    for (const mutation of mutationsList) {
+      if (mutation.type === "childList") {
+        // ตรวจสอบว่า element ถูกสร้างขึ้นแล้วหรือยัง
+        shadowRoot = elementWithShadowRoot.shadowRoot;
+        if (shadowRoot != null) {
+          // สามารถเข้าถึง shadow root และ element ใน shadow root ได้
+          const shadowElement = shadowRoot.querySelector("#myShadowElement");
+          console.log(shadowElement);
+          observer.disconnect();
+        }
+      }
+    }
+  });
+  observer.observe(elementWithShadowRoot, { childList: true, subtree: true });
+}
+else {
+  // สามารถเข้าถึง shadow root และ element ใน shadow root ได้เลย
+  const shadowElement = shadowRoot.querySelector("#myShadowElement");
+  console.log(shadowElement);
+}
+
+
+        // let dataPosition = "0.23846354887580268m 3.554613785267205m -0.41442673593730955m";
+
+        // Step 1: Convert data-position to Position Vector
+        
+
+    //     const modelViewers = document.querySelectorAll('.Hotspot');
+    //     modelViewers.forEach(modelViewer => {
+    //     const dataPosition = modelViewer.getAttribute('data-position');
+    //     console.log(dataPosition); 
+
+    //     let position = dataPosition.replace(/m/g, '0').split(' ').map(Number); // [0.23846354887580268, 3.554613785267205, -0.41442673593730955]
+    //     console.log(position); 
+
+    //     // Step 2: Define Up Vector
+    //     let up = [0, 1, 0];
+
+    //     // Step 3: Calculate Normal Vector using Cross Product
+    //     let normal = crossProduct(position, up);
+
+    //     // Step 4: Convert Normal Vector to data-normal format
+    //     let dataNormal = `${normal[0]}m ${normal[1]}m ${normal[2]}m`;
+
+    //     // Cross Product function
+    //     function crossProduct(a, b) {
+    //     let x = a[1]*b[2] - a[2]*b[1];
+    //     let y = a[2]*b[0] - a[0]*b[2];
+    //     let z = a[0]*b[1] - a[1]*b[0];
+    //     return [x, y, z];
+    //     }
+
+    //     console.log(dataNormal); 
+    // });
+
+
+        // console.log(dataNormal);
+        // modelViewer.setAttribute('data-normal', normal.join('m ') + 'm ');
+        // });
+
+        // function normalize(v) {
+        // const length = Math.sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
+        // return [v[0]/length, v[1]/length, v[2]/length];
+        // }
+
+
+
+        const modelViewer2 = document.querySelector("#hotspot-camera-view-demo");
+        const annotationClicked = (annotation) => {
+            let dataset = annotation.dataset;
+            modelViewer2.cameraTarget = dataset.target;
+            modelViewer2.cameraOrbit = dataset.orbit;
+            // modelViewer2.fieldOfView = '45deg';
+        }
+
+        modelViewer2.querySelectorAll('button').forEach((hotspot) => {
+            console.log("hello hotspot", hotspot);
+            hotspot.addEventListener('click', () => annotationClicked(hotspot));
+        });
+
+
+     const getBtn = document.querySelectorAll('.Hotspot');
+     
+     getBtn.forEach(function (btn) { 
+
+        btn.addEventListener('click', function(event) {
+
+            event.preventDefault();
+            const target = event.currentTarget;
+
+            console.log(target);
+            const showModal = document.getElementById('modal-open');
+            showModal.classList.add("active");
+            const closeModal = document.getElementById('modal-close');
+            closeModal.addEventListener('click', function() {
+                showModal.classList.remove("active");
+            });
+            const getDescription = target.querySelector('.HotspotAnnotation').innerText;
+            document.getElementById('description-tattoo').innerHTML = `Tattoo area name : ${getDescription}`
+            
+            console.log(getDescription);
+        
+        });
+    
+        btn.addEventListener('mouseover', function(evt) {
+
+            evt.preventDefault();
+            const target = evt.currentTarget;
+            const ewerer = target.querySelector('.HotspotAnnotation');
+            ewerer.classList.add("active");
+
+            target.addEventListener('mouseout', event => {
+                ewerer.classList.remove("active");
+            });
+        });
+
+    });
+    </script>
+</body>
+</html>

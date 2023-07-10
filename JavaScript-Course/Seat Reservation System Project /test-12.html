@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <ul id="myList">
+        <li class="option-class">Item 1</li>
+        <li class="option-class">Item 2</li>
+        <li class="option-class">Item 3</li>
+      </ul>
+    
+</body>
+
+<script>
+
+    // Get the <ul> element
+var ul = document.getElementById("myList");
+
+// Create a <select> element
+var select = document.createElement("select");
+
+// Iterate over each <li> item in the <ul>
+var items = ul.getElementsByTagName("li");
+for (var i = 0; i < items.length; i++) {
+  var li = items[i];
+  
+  // Get the class of the <li>
+  var liClass = li.getAttribute("class");
+  
+  // Create an <option> element
+  var option = document.createElement("option");
+  
+  // Set the text of the <option> to the text of the <li>
+  option.text = li.textContent;
+  
+  // Set the value of the <option> to the index of the <li>
+  option.value = i;
+  
+  // Set the class of the <option> to the class of the <li>
+  option.setAttribute("class", liClass);
+  
+  // Append the <option> to the <select>
+  select.appendChild(option);
+}
+
+// Replace the <ul> with the <select>
+ul.parentNode.replaceChild(select, ul);
+
+</script>
+</html>

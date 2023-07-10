@@ -1,0 +1,98 @@
+{{ dump(product) }}
+
+
+<div class="flex flex-wrap justify-center w-full xl:w-8/10 gap-x-0 sm:gap-x-4 md:gap-x-4 lg:gap-x-4 xl:gap-x-4 gap-y-8 sm:gap-y-8 md:gap-y-8 lg:gap-y-8 xl:gap-y-8 grid__second grid-margin-bottom line-bottom grid-width-img">
+    <div class="flex-item items-start justify-start w-full sm:w-full md:w-6/12 lg:w-6/12 xl:w-6/12  grid-first__image grid-gallery-left">
+        <div class="flex-item-inner flex flex-col items-start justify-start">
+            <p class="text-img">{{ product.shortDescription|raw  }}</p>
+            <img src="{{ product.image.src }}"
+                 srcset="{{ product.image.srcset|e('html_attr') }}"
+                 alt="{{ product.image.alt|e('html_attr') }}"
+                 class="first-img-display"
+            />
+            <div class="row-img">
+                {% for galleryImage in product.galleryImages %}
+                    <div class="column-img">
+                        <img src="{{ galleryImage.src }}"
+                             srcset="{{ galleryImage.srcset|e('html_attr') }}"
+                             alt="{{ galleryImage.alt|e('html_attr') }}"
+                        />
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-item items-start justify-start w-full sm:w-full md:w-6/12 lg:w-6/12 xl:w-6/12  grid-first__description description2">
+        <div class="flex-item-inner flex flex-col items-start justify-center">
+            <h2 class="mt-0 mb-2">{{ product.name }}</h2>
+            <h3 class="mb-0"><strong>{{ product.price }} {{ __('EUR ', 'hohoi-shop-plugin')}}</strong>{{ __('zzgl. Versand', 'hohoi-shop-plugin')}}</h3>
+            <div class="flex attributes-description">
+                {% for attribute in product.attributes %}
+                    {% for option in attribute.options %}
+                        <p class="p__description mt-0 mb-4">{{ attribute.label }}{{ option.name }}</p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            <p class="p-title__description1 mb-4">{{ product.description|raw }}</p>
+            <div class="c-section container mx-auto flex flex-row flex-wrap items-end justify-start w-full sm:w-full md:w-full lg:w-full xl:w-full section-input-quantity" style="">
+                {#                    <div class="quantity">#}
+                {#                        <input name="quantity"#}
+                {#                               id="{{ qtyInputId|e }}"#}
+                {#                               type="number"#}
+                {#                               value="{{ product.purchaseQty|e }}"#}
+                {#                               min="{{ product.minPurchaseQty|e }}"#}
+                {#                                    {{ product.maxPurchaseQty and product.maxPurchaseQty > 0 ? 'max="' ~ product.maxPurchaseQty|e ~ '"' : '' }}#}
+                {#                        >#}
+                {#                        <input type="number" min="1" max="9" step="1" value="1">#}
+                {#                        <div class="quantity-nav">#}
+                {#                            <button class="quantity-button quantity-up">▲</button>#}
+                {#                            <button class="quantity-button quantity-down">▼</button>#}
+                {#                        </div>#}
+                {#                    </div>#}
+
+                {#                    <div class="is-layout-flex wp-block-buttons">#}
+                {#                        <div class="wp-block-button">#}
+
+                {#                            <a href="/{{ product.addToCartUrl }}" class="wp-block-button__link wp-element-button">{{ __('In den Warenkorb')}}</a>#}
+                {#                        </div>#}
+                {#                    </div>#}
+
+                {% if product.isInStock %}
+                    {{ do_action('woocommerce_before_add_to_cart_form')|raw }}
+                    <form class="cart w-full flex flex-wrap" action="{{ product.addToCartUrl|e('html_attr') }}" method="post" enctype='multipart/form-data'>
+                        {{ do_action('woocommerce_before_add_to_cart_button')|raw }}
+
+                        {{ do_action('woocommerce_before_add_to_cart_button')|raw }}
+
+                        {{ do_action('woocommerce_before_add_to_cart_quantity')|raw }}
+
+                        {% set qtyInputId = uniqid('quantity_') %}
+
+                        <div class="quantity">
+                            <input name="quantity"
+                                   id="{{ qtyInputId|e }}"
+                                   type="number"
+                                   value="{{ product.purchaseQty|e }}"
+                                   min="{{ product.minPurchaseQty|e }}" {{ product.maxPurchaseQty and product.maxPurchaseQty > 0 ? 'max="' ~ product.maxPurchaseQty|e ~ '"' : '' }}
+                            >
+                            <div class="quantity-nav">
+                                <button class="quantity-button quantity-up">▲</button>
+                                <button class="quantity-button quantity-down">▼</button>
+                            </div>
+                        </div>
+                        {{ do_action('woocommerce_after_add_to_cart_quantity')|raw }}
+
+                        <button type="submit" name="add-to-cart"
+                                value="{{ product.id|e }}"
+                                class="c-button c-product__add-to-cart-btn">{{ __('In den Warenkorb', 'hohoi-shop-plugin') }}
+                        </button>
+                        {{ do_action('woocommerce_after_add_to_cart_button')|raw }}
+                    </form>
+                    {{ do_action('woocommerce_after_add_to_cart_form')|raw }}
+                {% endif %}
+            </div>
+            <p class="p-title__description3 mt-4">{{ __('Ausgefallene Grußkarten für dir', 'hohoi-shop-plugin')}}</p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <model-viewer data-position="0.23846354887580268m 3.554613785267205m -0.41442673593730955m"></model-viewer>
+<model-viewer data-position="1 1 1"></model-viewer>
+<model-viewer data-position="-1 -1 -1"></model-viewer>
+
+<script>
+    const modelViewers = document.querySelectorAll('model-viewer');
+modelViewers.forEach(modelViewer => {
+  const position = modelViewer.getAttribute('data-position').replace(/m/g, '0').split(' ').map(Number);
+  const normal = normalize(position);
+  modelViewer.setAttribute('data-normal', normal.join(' '));
+});
+
+function normalize(v) {
+  const length = Math.sqrt(v[0]*v[0] + v[1]*v[1] + v[2]*v[2]);
+  return [v[0]/length, v[1]/length, v[2]/length];
+}
+
+
+
+// let dataPosition = "0.23846354887580268m 3.554613785267205m -0.41442673593730955m";
+
+// // Step 1: Convert data-position to Position Vector
+// let position = dataPosition.replace(/m/g, '0').split(' ').map(Number); // [0.23846354887580268, 3.554613785267205, -0.41442673593730955]
+// console.log(position);
+// // Step 2: Define Up Vector
+// let up = [0, 1, 0];
+
+// // Step 3: Calculate Normal Vector using Cross Product
+// let normal = crossProduct(position, up);
+// console.log(normal);
+
+// // Step 4: Convert Normal Vector to data-normal format
+// let dataNormal = `${normal[0]}m ${normal[1]}m ${normal[2]}m`;
+
+// // Cross Product function
+// function crossProduct(a, b) {
+//   let x = a[1]*b[2] - a[2]*b[1];
+//   let y = a[2]*b[0] - a[0]*b[2];
+//   let z = a[0]*b[1] - a[1]*b[0];
+//   return [x, y, z];
+// }
+
+// console.log(dataNormal); // "0.19112004990798498m 0m 0.9810740469140208m"
+
+const dataPosition3 = "0 1.6 -2";
+const [x, y, z] = dataPosition3.split(" ").map(parseFloat);
+
+const yaw = -Math.atan2(x, z) * (180 / Math.PI);
+const pitch = -Math.atan2(y, Math.sqrt(x**2 + z**2)) * (180 / Math.PI);
+
+const dataOrbit = `${yaw}deg ${pitch}deg`;
+console.log(dataOrbit); // "-90.96375653207352deg 27.853678720527746deg"
+
+
+const dataPosition = "0.010094095736436937m 1.1722323603434157m -0.08865824043248116m";
+const positionArray = dataPosition.split(" ").map(value => parseFloat(value)); // แยกค่าแต่ละมิติและแปลงเป็นเลขทศนิยม
+console.log(positionArray)
+
+const position = new THREE.Vector3(positionArray[0], positionArray[1], positionArray[2]); // สร้าง Vector3 จากค่าที่แยกได้
+const radius = 1.5; // รัศมีจากกล้องไปยังจุดกึ่งกลางของโมเดล
+const theta = positionArray[0] / radius; // คำนวณค่า azimuthal angle
+const phi = Math.PI/2 - positionArray[1] / radius; // คำนวณค่า polar angle
+const cameraPosition = new THREE.Vector3(radius * Math.sin(phi) * Math.cos(theta), radius * Math.cos(phi), radius * Math.sin(phi) * Math.sin(theta)); // แปลงค่าไปเป็น camera position
+
+
+
+</script>
+</body>
+</html>
